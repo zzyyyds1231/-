@@ -129,7 +129,7 @@ const App = () => {
               placeholder="API Key" 
               className="bg-transparent text-xs w-20 outline-none text-white placeholder:text-white/50" 
             />
-            <button onClick={saveApiKey}><Save size={16}/></button>
+            <button onClick={saveApiKey} title="保存 Key"><Save size={16}/></button>
           </div>
         </div>
 
@@ -141,7 +141,7 @@ const App = () => {
                 onClick={()=>setVoice(v.id)} 
                 className={`p-2 rounded-xl border-2 transition-all ${voice === v.id ? 'border-indigo-500 bg-indigo-500/10' : 'border-transparent bg-slate-700 hover:bg-slate-600'}`}
               >
-                <div className="text-[10px] text-center">{v.name}</div>
+                <div className="text-[10px] text-center font-medium">{v.name}</div>
               </button>
             ))}
           </div>
@@ -151,7 +151,7 @@ const App = () => {
               <button 
                 key={p.id} 
                 onClick={()=>setPersonaId(p.id)} 
-                className={`px-3 py-1.5 rounded-full text-xs ${personaId === p.id ? 'bg-indigo-600 text-white' : 'bg-slate-700 text-slate-400'}`}
+                className={`px-3 py-1.5 rounded-full text-xs transition-colors ${personaId === p.id ? 'bg-indigo-600 text-white' : 'bg-slate-700 text-slate-400 hover:bg-slate-600'}`}
               >
                 {p.name}
               </button>
@@ -160,18 +160,18 @@ const App = () => {
 
           <div className="relative">
             <textarea 
-              className="w-full h-40 p-4 bg-slate-700 rounded-2xl text-white text-sm outline-none resize-none" 
+              className="w-full h-40 p-4 bg-slate-700 rounded-2xl text-white text-sm outline-none resize-none focus:ring-2 focus:ring-indigo-500/50 transition-shadow" 
               value={text} 
               onChange={e=>setText(e.target.value)}
             />
-            <div className="absolute bottom-3 right-3 flex items-center gap-2 bg-slate-800/80 px-2 py-1 rounded-lg">
+            <div className="absolute bottom-3 right-3 flex items-center gap-2 bg-slate-800/90 px-2 py-1 rounded-lg border border-slate-600">
               <Gauge size={12} className="text-slate-400" />
-              <input type="range" min="0.5" max="2.0" step="0.1" value={speed} onChange={e=>setSpeed(parseFloat(e.target.value))} className="w-12 h-1 accent-indigo-500" />
+              <input type="range" min="0.5" max="2.0" step="0.1" value={speed} onChange={e=>setSpeed(parseFloat(e.target.value))} className="w-12 h-1 accent-indigo-500 cursor-pointer" />
               <span className="text-[10px] text-slate-400 font-mono">{speed}x</span>
             </div>
           </div>
 
-          {error && <div className="text-red-400 text-xs text-center">{error}</div>}
+          {error && <div className="text-red-400 text-xs text-center font-medium bg-red-400/10 py-2 rounded-lg">{error}</div>}
 
           <div className="flex gap-2">
             <button 
@@ -180,10 +180,10 @@ const App = () => {
               className="flex-1 bg-indigo-600 text-white py-4 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-indigo-700 active:scale-95 transition-all disabled:opacity-50"
             >
               {loading ? <Loader2 className="animate-spin" /> : <Play size={20} />}
-              {loading ? '合成中...' : '开始合成'}
+              {loading ? '正在炼金...' : '开始合成'}
             </button>
             {lastAudioBlob && (
-              <button onClick={downloadAudio} className="p-4 bg-slate-700 text-white rounded-2xl hover:bg-slate-600 transition-all">
+              <button onClick={downloadAudio} className="p-4 bg-slate-700 text-white rounded-2xl hover:bg-slate-600 active:scale-95 transition-all">
                 <Download size={20} />
               </button>
             )}
